@@ -1,0 +1,7 @@
+C:\Users\katri\OneDrive\Рабочий стол\ооп\lab1strucGame\lab1strucGame\bin\Debug\lab1strucGame.exe.config
+C:\Users\katri\OneDrive\Рабочий стол\ооп\lab1strucGame\lab1strucGame\bin\Debug\lab1strucGame.exe
+C:\Users\katri\OneDrive\Рабочий стол\ооп\lab1strucGame\lab1strucGame\bin\Debug\lab1strucGame.pdb
+C:\Users\katri\OneDrive\Рабочий стол\ооп\lab1strucGame\lab1strucGame\obj\Debug\lab1strucGame.csprojAssemblyReference.cache
+C:\Users\katri\OneDrive\Рабочий стол\ооп\lab1strucGame\lab1strucGame\obj\Debug\lab1strucGame.csproj.CoreCompileInputs.cache
+C:\Users\katri\OneDrive\Рабочий стол\ооп\lab1strucGame\lab1strucGame\obj\Debug\lab1strucGame.exe
+C:\Users\katri\OneDrive\Рабочий стол\ооп\lab1strucGame\lab1strucGame\obj\Debug\lab1strucGame.pdb
