@@ -7,10 +7,6 @@ using System.Timers;
 
 namespace lab1strucGame
 {
-
-   
-
-
     struct Point
     {
         private int x, y;
@@ -262,13 +258,15 @@ namespace lab1strucGame
     {
         static void Report1()
         {
-            Console.WriteLine($"В этой игре вам нужно собрать все призы которые обозначены как- @.\n " +
-                $"У вас есть ловушки обозначеннные - %, \n при попадании на " +
-                $"них у вас бцдет отниматься 1 из 3х жизней(если жизней больше нет - проигрыш) \n" +
-                $"Так же в игре есть точки остановки - . (при попадании на них игрок останавливается).\n" +
-                $"Чтобы выграть вам нужно собрать все призы.");
+            Console.WriteLine($"Призы - @.\nЛовушки  - %,\nТочки остановки - . (при попадании на них игрок останавливается).\n");
         }
-
+        static string Choose()
+        {
+            Console.WriteLine($"Выберете уровень сложности. Введите 1, 2 или 3");
+            string res = Console.ReadLine();
+            Console.Clear();
+            return res;
+        }
         static void DrawField(Field field)
         {
             foreach (object v in field.place)
@@ -321,19 +319,46 @@ namespace lab1strucGame
         static void Main(string[] args)
         {
             //Console.BackgroundColor = ConsoleColor.White;
-         
+            string level = Choose();
+           
             //Console.Clear();
-            Field field = new Field(20, 10);
-            field.GenerateWall();
-            field.GeneratePlayer(5, 6, 3, 5);
-            field.GeneratePrize(5);
-            field.GenerateEnemies(9);
-            field.GeneratePoints(9);
-            DrawField(field);
-            Report1();
+            Field field = new Field(25, 12);
+           
+            if (level == "1")
+            {
+                field.GenerateWall();
+                field.GeneratePlayer(5, 6, 3, 5);
+                field.GeneratePrize(5);
+                field.GenerateEnemies(3);
+                field.GeneratePoints(9);
+                DrawField(field);
+
+            }
+            if (level == "2")
+            {
+                field.GenerateWall();
+                field.GeneratePlayer(5, 6, 3, 5);
+                field.GeneratePrize(5);
+                field.GenerateEnemies(9);
+                field.GeneratePoints(9);
+                DrawField(field);
+
+            }
+            if (level == "3")
+            {
+                field.GenerateWall();
+                field.GeneratePlayer(5, 6, 3, 5);
+                field.GeneratePrize(5);
+                field.GenerateEnemies(15);
+                field.GeneratePoints(7);
+                DrawField(field);
+
+            }
+            //Report1();
             ConsoleKeyInfo keyinfo;
             do
             {
+                Report1();
                 field.Report();
                 keyinfo = Console.ReadKey();
                if(keyinfo.Key == ConsoleKey.A)
