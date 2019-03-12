@@ -62,7 +62,7 @@ namespace lab1strucGame
             }
             return false;
         }
-
+        
         public bool FailGame()
         {
             if(player.Lives == 0)
@@ -134,6 +134,15 @@ namespace lab1strucGame
                 player = player.Move(x, y);
                 place[player.X, player.Y] = player;
                 player = player.PlusLives();
+                place[X, Y] = null;
+                return false;
+            }
+            else if (place[X + x, Y + y].GetType() == typeof(Death))
+            {
+
+                player = player.Move(x, y);
+                place[player.X, player.Y] = player;
+                player = player.NullLives();
                 place[X, Y] = null;
                 return false;
             }
@@ -244,6 +253,25 @@ namespace lab1strucGame
                 }
             }
         }
+        public void GenerateDeath(int count)
+        {
+            int x, y;
+            while (count > 0)
+            {
+                Random rnd = new Random();
+                x = rnd.Next(1, Width);
+                y = rnd.Next(1, Height);
+                if (place[x, y] == null)
+                {
+                    place[x, y] = new Death(x, y);
+                    count--;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        }
         public void GenerateTeleport()
         {
             int x = 2, y = 2;
@@ -269,6 +297,10 @@ namespace lab1strucGame
         public Player MinusLives()
         {
             return new Player(X, Y, --Lives);
+        }
+        public Player NullLives()
+        {
+            return new Player(X, Y, 0);
         }
         public Player PlusLives()
         {
@@ -309,6 +341,16 @@ namespace lab1strucGame
         public Enemy(int x,int y)
         {
             Symbol = "%";
+            point = new Point(x, y);
+        }
+    }
+    struct Death
+    {
+        public Point point;
+        public string Symbol { get; }
+        public Death(int x, int y)
+        {
+            Symbol = "*";
             point = new Point(x, y);
         }
     }
@@ -377,7 +419,7 @@ namespace lab1strucGame
         static void Report1(int y)
         {
             Console.SetCursorPosition(0, y);
-            Console.WriteLine($"Призы - @\nЛовушки  - %\nТочки остановки - #\nТелепорт-Т\nМед помощь-M");
+            Console.WriteLine($"Призы - @\nЛовушки  - %\nТочки остановки - #\nТелепорт-Т\nМед помощь-M\nБомбочка(полностью забирает ваши жизни)-*");
         }
         static void DrawField(Field field, int x, int y)
         {
@@ -396,7 +438,14 @@ namespace lab1strucGame
                         Console.SetCursorPosition(w.point.X, w.point.Y);
                         Console.WriteLine(w.Symbol);
                     }
-                    else if (v.GetType() == typeof(MedHelp))
+                if (v.GetType() == typeof(Death))
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Death w = (Death)v;
+                    Console.SetCursorPosition(w.point.X, w.point.Y);
+                    Console.WriteLine(w.Symbol);
+                }
+                else if (v.GetType() == typeof(MedHelp))
                     {
                         Console.ForegroundColor = ConsoleColor.DarkMagenta;
                         MedHelp w = (MedHelp)v;
@@ -491,7 +540,8 @@ namespace lab1strucGame
                     field.GenerateWall();
                     field.GenerateTeleport();
                     field.GeneratePlayer(5, 6, 3);
-                    field.GenerateEnemies(3);                  
+                    field.GenerateEnemies(3);
+                    field.GenerateDeath(2);
                     field.GenerateMedHelp(1);
                     field.GeneratePoints(17);
                     DrawAllField(field);
@@ -504,6 +554,7 @@ namespace lab1strucGame
                     field.GeneratePlayer(5, 6, 3);
                     field.GenerateEnemies(15);
                     field.GenerateTeleport();
+                    field.GenerateDeath(2);
                     field.GenerateMedHelp(1);
                     field.GeneratePoints(30);
                     DrawAllField(field);
@@ -515,6 +566,7 @@ namespace lab1strucGame
                     field.GenerateWall();
                     field.GeneratePlayer(5, 6, 3);
                     field.GenerateTeleport();
+                    field.GenerateDeath(2);
                     field.GenerateEnemies(20);
                     field.GenerateMedHelp(1);
                     field.GeneratePoints(35);
