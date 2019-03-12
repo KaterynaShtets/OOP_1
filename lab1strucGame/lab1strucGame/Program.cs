@@ -144,14 +144,16 @@ namespace lab1strucGame
                 {
                     player = player.Teleport(Width - 3, Height-2);
                     place[player.X, player.Y] = player;
+                   
                 }
                 else if (player.X + x == Width - 2 && player.Y + y == Height - 2)
                 {
                     player = player.Teleport(3, 2);
                     place[player.X, player.Y] = player;
+
                 }
                 place[X, Y] = null;
-                return false;
+                return true;
             }
             else if (place[X + x, Y + y].GetType() == typeof(BreakPoint))
             {
@@ -280,6 +282,8 @@ namespace lab1strucGame
         }
         public Player Teleport(int x, int y)
         {
+            X += x;
+            Y += y;
             return new Player(x, y, Lives);
         }
 
@@ -373,7 +377,7 @@ namespace lab1strucGame
         static void Report1(int y)
         {
             Console.SetCursorPosition(0, y);
-            Console.WriteLine($"Призы - @.\nЛовушки  - %,\nТочки остановки - #.\n");
+            Console.WriteLine($"Призы - @\nЛовушки  - %\nТочки остановки - #\nТелепорт-Т\nМед помощь-M");
         }
         static void DrawField(Field field, int x, int y)
         {
@@ -394,17 +398,17 @@ namespace lab1strucGame
                     }
                     else if (v.GetType() == typeof(MedHelp))
                     {
-                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                    MedHelp w = (MedHelp)v;
-                    Console.SetCursorPosition(w.point.X, w.point.Y);
-                    Console.WriteLine(w.Symbol);
+                        Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                        MedHelp w = (MedHelp)v;
+                        Console.SetCursorPosition(w.point.X, w.point.Y);
+                        Console.WriteLine(w.Symbol);
                     }
                     else if (v.GetType() == typeof(Teleport))
                     {
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Teleport w = (Teleport)v;
-                    Console.SetCursorPosition(w.point.X, w.point.Y);
-                    Console.WriteLine(w.Symbol);
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Teleport w = (Teleport)v;
+                        Console.SetCursorPosition(w.point.X, w.point.Y);
+                        Console.WriteLine(w.Symbol);
                     }
                     else if (v.GetType() == typeof(Player))
                     {
@@ -439,7 +443,7 @@ namespace lab1strucGame
         }
         static void Timer()
         {
-            for (int a = 80; a >= 0; a--)
+            for (int a = 180; a >= 0; a--)
             {
                 Console.SetCursorPosition(0, 20);
                 Console.Write("\rУ вас осталось {0:00}", a);
@@ -483,37 +487,37 @@ namespace lab1strucGame
                 Field field = new Field(25, 12, 5);
                 if (level == 1)
                 {
-                     field = new Field(25, 12, 5);
+                     field = new Field(25, 12, 3);
                     field.GenerateWall();
                     field.GenerateTeleport();
                     field.GeneratePlayer(5, 6, 3);
                     field.GenerateEnemies(3);                  
                     field.GenerateMedHelp(1);
-                    field.GeneratePoints(13);
+                    field.GeneratePoints(17);
                     DrawAllField(field);
 
                 }
                 else if (level == 2)
                 {
-                    field = new Field(35, 17, 5);
+                    field = new Field(35, 17, 3);
                     field.GenerateWall();
                     field.GeneratePlayer(5, 6, 3);
                     field.GenerateEnemies(15);
                     field.GenerateTeleport();
                     field.GenerateMedHelp(1);
-                    field.GeneratePoints(27);
+                    field.GeneratePoints(30);
                     DrawAllField(field);
 
                 }
                 else if (level == 3)
                 {
-                    field = new Field(40, 19, 5);
+                    field = new Field(40, 19, 3);
                     field.GenerateWall();
                     field.GeneratePlayer(5, 6, 3);
                     field.GenerateTeleport();
                     field.GenerateEnemies(20);
                     field.GenerateMedHelp(1);
-                    field.GeneratePoints(30);
+                    field.GeneratePoints(35);
                     DrawAllField(field);
 
                 }
@@ -525,7 +529,7 @@ namespace lab1strucGame
                 {
                     Report1(field.Height + 3);
                     field.Report();
-                    keyinfo = Console.ReadKey();
+                    keyinfo = Console.ReadKey(true);
                     if (keyinfo.Key == ConsoleKey.A)
                     {
                         count++;
